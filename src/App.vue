@@ -33,9 +33,11 @@ export default {
     <input type="text" class="text" v-model="searchTerm" />
     <button @click="runSearch">Search</button>
     {{ searchTerm }}
-    <div>
-      <p v-for="result in searchResults" :key="result.id">{{ result.name }}</p>
-    </div>
+    <ul>
+      <li v-for="result in searchResults" :key="result.id">
+        {{ result.name }}
+      </li>
+    </ul>
   </main>
 </template>
 
@@ -47,5 +49,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+ul {
+  list-style-type: none;
 }
 </style>
