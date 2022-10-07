@@ -13,13 +13,16 @@ export default {
   },
   computed: {
     endpoint() {
-      return this.searchTerm.length ? '/breeds/search' : '/breeds'
+      return this.searchTerm.length ? './breeds/search' : './breeds'
     },
   },
   methods: {
     async runSearch() {
       const response = await axios.get(this.endpoint, {
-        q: this.searchTerm,
+        params: {
+          q: this.searchTerm,
+          limit: 20,
+        },
       })
 
       this.searchResults = response.data
