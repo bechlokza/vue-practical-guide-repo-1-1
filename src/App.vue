@@ -1,34 +1,33 @@
-<script>
+<script lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 
 import axios from './middleware'
+import { computed, defineComponent, ref } from 'vue'
 
-export default {
-  data() {
-    return {
-      searchTerm: '',
-      searchResults: [],
-    }
-  },
-  computed: {
-    endpoint() {
-      return this.searchTerm.length ? './breeds/search' : './breeds'
-    },
-  },
-  methods: {
-    async runSearch() {
-      const response = await axios.get(this.endpoint, {
+export default defineComponent({
+  setup() {
+    const searchTerm = ref('')
+    const searchResults = ref([])
+
+    const endpoint = computed(() =>
+      searchTerm.value.length ? '/breeds/search' : '/breeds'
+    )
+
+    async function runSearch() {
+      const response = await axios.get(endpoint.value, {
         params: {
-          q: this.searchTerm,
+          q: searchTerm.value,
           limit: 20,
         },
       })
 
-      this.searchResults = response.data
-    },
+      searchResults.value = response.data
+    }
+
+    return { searchTerm, searchResults, runSearch }
   },
-}
+})
 </script>
 
 <template>
